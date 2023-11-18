@@ -13,7 +13,9 @@ app.use(bodyParser.json());
 // Login Route
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    const isAuthenticated = true; // Simulate authentication, replace with actual check
+    // TODO: Simulate authentication for prototyping
+    // add DB comparsion routine to check username+password
+    const isAuthenticated = true; 
 
     if (isAuthenticated) {
         // Create JWT token
@@ -25,6 +27,7 @@ app.post('/login', (req, res) => {
 });
 
 // Middleware to verify token
+// Function to be used by every router to protected like /content below
 const verifyToken = (req, res, next) => {
     const bearerHeader = req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
@@ -42,6 +45,7 @@ const verifyToken = (req, res, next) => {
         res.sendStatus(401); // Unauthorized
     }
 };
+
 
 // Protected Route
 app.get('/content', verifyToken, (req, res) => {
